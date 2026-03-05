@@ -1,6 +1,5 @@
 {% set name = "llama-index-readers-file" %}
 {% set version = "0.5.6" %}
-{% set python_min = "3.10" %}
 
 package:
   name: {{ name|lower }}
@@ -9,28 +8,31 @@ package:
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/llama_index_readers_file-{{ version }}.tar.gz
     sha256: 1c08b14facc2dfe933622aaa26dc7d2a7a6023c42d3db896a2c948789edaf1ea
+    patches:
+      - patches/relax-striprtf-pin.patch
   # https://github.com/run-llama/llama_index/issues/10806
   - url: https://raw.githubusercontent.com/run-llama/llama_index/main/LICENSE
     sha256: 24f40b5190fdacabc24ddbb5f76364d15e4f030925220ea300d8a2dd4993c8cb
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  skip: true  # [py<310]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python
     - hatchling
     - pip
   run:
-    - defusedxml >=0.7.1
-    - pandas >=2.0.0,<3
-    - python >={{ python_min }},<4.0
-    - llama-index-core >=0.13.0,<0.15
+    - python
     - beautifulsoup4 >=4.12.3,<5
+    - defusedxml >=0.7.1
+    - llama-index-core >=0.13.0,<0.15
+    - pandas >=2.0.0,<3
     - pypdf >=6.1.3,<7
-    - striprtf >=0.0.26,<0.0.27
+    # upstream pins >=0.0.26,<0.0.27 but relaxed since striprtf 0.0.29 has no breaking changes
+    - striprtf >=0.0.26
   run_constrained:
     - pymupdf >=1.23.21,<2.0.0
 
@@ -41,13 +43,17 @@ test:
     - pip check
   requires:
     - pip
-    - python {{ python_min }}
 
 about:
   home: https://llamaindex.ai
-  summary: llama-index readers file integration
   license: MIT
   license_file: LICENSE
+  license_family: MIT
+  summary: llama-index readers file integration
+  description: |
+    This package provides the default integration for different loaders
+    that are used within SimpleDirectoryReader.
+  doc_url: https://docs.llamaindex.ai/
   dev_url: https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/readers/llama-index-readers-file
 
 extra:
