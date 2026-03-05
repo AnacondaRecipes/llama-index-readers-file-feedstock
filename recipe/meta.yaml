@@ -50,6 +50,9 @@ about:
   license_file: LICENSE
   license_family: MIT
   summary: llama-index readers file integration
+  description: |
+    LlamaIndex file readers integration. Provides readers for various file
+    formats including PDF, HTML, CSV, Markdown, RTF, and more.
   doc_url: https://docs.llamaindex.ai/
   dev_url: https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/readers/llama-index-readers-file
 
