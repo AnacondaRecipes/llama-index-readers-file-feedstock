@@ -51,8 +51,8 @@ about:
   license_family: MIT
   summary: llama-index readers file integration
   description: |
-    LlamaIndex file readers integration. Provides readers for various file
-    formats including PDF, HTML, CSV, Markdown, RTF, and more.
+    This package provides the default integration for different loaders
+    that are used within SimpleDirectoryReader.
   doc_url: https://docs.llamaindex.ai/
   dev_url: https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/readers/llama-index-readers-file
 
